@@ -42,6 +42,23 @@ def lambda_handler(event, context):
             "gender"   : gender, 
             "name"   : name
         }
+        
+        items, count=db_access.get_data()
+        print(f"items: {items}, count: {count}")
+        for item in items:
+            emailDB=item['email']
+            if email==emailDB:
+                return {
+                    'statusCode': 201, 
+                    "headers": {
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+                        "Access-Control-Allow-Headers": "Content-Type"
+                    },
+                    'body': json.dumps('This is Hey Tech Blog!')
+                }
+                
+        
         db_access.put_data(input_data)
     
     elif event['httpMethod'] == 'GET':
